@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GlacialPower Embed</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+
+    iframe {
+      border: none;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+
+    #fullscreenBtn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      padding: 8px 12px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s ease;
+    }
+
+
+    #fullscreenBtn:hover {
+      opacity: 1;
+    }
+
+
+    #fullscreenBtn.hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+
+  <button id="fullscreenBtn">Fullscreen</button>
+
+
+  <iframe 
+    id="embedFrame"
+    src="https://create.glacialpower.com" 
+    allowfullscreen
+    sandbox="allow-same-origin allow-scripts allow-forms allow-popups"
+  ></iframe>
+
+
+  <script>
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const iframe = document.getElementById('embedFrame');
+
+
+    function enterFullscreen() {
+      const docEl = document.documentElement;
+
+
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen();
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+      } else if (docEl.msRequestFullscreen) {
+        docEl.msRequestFullscreen();
+      }
+    }
+
+
+    function fadeInIframe() {
+      iframe.style.opacity = '1';
+    }
+
+
+    fullscreenBtn.addEventListener('click', () => {
+      enterFullscreen();
+
+
+      // Delay the animation slightly to ensure fullscreen is triggered
+      setTimeout(() => {
+        fadeInIframe();
+        fullscreenBtn.classList.add('hidden');
+      }, 100);
+    });
+
+
+    // Auto-click fullscreen after 1 second
+    setTimeout(() => {
+      fullscreenBtn.click();
+    }, 1000);
+  </script>
+</body>
+</html>
